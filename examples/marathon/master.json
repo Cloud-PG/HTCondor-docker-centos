@@ -1,0 +1,26 @@
+{
+  "id": "/htcondor-master",
+  "cpus": 1,
+  "mem": 512,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "dscnaf/htcondor-debian",
+      "parameters": [
+        {
+          "key": "net",
+          "value": "htcondor"
+        }
+      ]
+    }
+  },
+    "ipAddress": {
+    },
+  "args": [
+    "-m",
+    "-c",
+    "<URL_CONDOR_CONFIG"
+  ]
+}
+

@@ -1,0 +1,37 @@
+{
+  "id": "/htcondor-submitter",
+  "cpus": 1,
+  "mem": 512,
+  "constraints": [
+    ["hostname", "CLUSTER", "nessun-ricordo-1.openstacklocal"]
+  ],
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "dscnaf/htcondor-debian",
+      "privileged": false,
+      "forcePullImage": true,
+      "parameters": [
+        {
+          "key": "net",
+          "value": "htcondor"
+        }
+      ]
+    }
+  },
+    "ipAddress": {
+    },
+  "args": [
+    "-s",
+    "<MASTER_IP>",
+    "-c",
+    "<URL_CONDOR_CONFIG>",
+    "-u",
+    "<USER>",
+    "-p",
+    "<PWD>",
+    "-k",
+    "<URL_PUBLIC_KEY>"
+  ]
+}
