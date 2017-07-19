@@ -80,19 +80,18 @@ unset DYLD_LIBRARY_PATH
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # some more ls aliases
 alias ll='ls -l -G'
 alias la='ls -laGh'
 alias temacs='emacs -nw'
-alias amsvar='if [ ! -e /Volumes/AMS_Disk/AMS/amsvar.sh ]; then open ~/Workstuff/AMS/AMS_Disk.sparseimage; fi;  source /Volumes/AMS_Disk/AMS/amsvar.sh'
 #alias l='ls -CF'
 
 # enable programmable completion features (you don't need to enable
@@ -101,21 +100,6 @@ alias amsvar='if [ ! -e /Volumes/AMS_Disk/AMS/amsvar.sh ]; then open ~/Workstuff
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
-#alias kinit='/usr/heimdal/bin/kinit'
-#klist -s
-#test1=$?
-#echo -e "\033[01;32mListing active kerberos tokens"
-#
-#klist -l | grep -v Expire
-#test2=$?
-#if [ $test1 -gt 0 -o -z $test2 ] ; then
-#    echo -e "\033[01;31mRunning kinit"
-#    echo -en "\033[01;33m"
-#    kinit --version
-#    kinit -k -t ~/.kerberos/vformato.keytab vformato@CERN.CH
-#fi
-#echo -en "\033[01;37m"
 
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
