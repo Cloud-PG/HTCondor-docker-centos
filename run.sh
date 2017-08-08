@@ -61,6 +61,8 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       echo "NUM_SLOTS = 1" >> /etc/condor/condor_config
       echo "NUM_SLOTS_TYPE_1 = 1" >> /etc/condor/condor_config
       echo "CCB_ADDRESS = $OPTARG" >> /etc/condor/condor_config
+      mkdir -p /mnt/onedata/
+      mkdir -p /var/log/dodas
       HEALTH_CHECK='executor'
     ;;
     c)
