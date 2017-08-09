@@ -7,8 +7,8 @@ EXPOSE  5000
 EXPOSE  22
 
 #--- Environment variables
-ENV USER="user"
-ENV USER_HOME="/home/user"
+ENV USER="amsuser"
+ENV USER_HOME="/home/amsuser"
 
 #RUN curl -sS http://get.onedata.org/oneclient.sh | bash
 
