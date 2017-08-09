@@ -37,6 +37,7 @@ CONDOR_HOST=
 SCHEDD_HOST=
 INTERFACE=
 HEALTH_CHECKS=
+ONEDATA=
 CONFIG_URL=
 KEY_URL=
 USER=
@@ -61,8 +62,7 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       echo "NUM_SLOTS = 1" >> /etc/condor/condor_config
       echo "NUM_SLOTS_TYPE_1 = 1" >> /etc/condor/condor_config
       echo "CCB_ADDRESS = $OPTARG" >> /etc/condor/condor_config
-      mkdir -p /mnt/onedata/
-      mkdir -p /var/log/dodas
+      ONEDATA='true'
       oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
       HEALTH_CHECK='executor'
     ;;
@@ -75,8 +75,7 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
       ROLE_DAEMONS="$SUBMITTER_DAEMONS"
       CONDOR_HOST="$OPTARG"
-      mkdir -p /mnt/onedata/
-      mkdir -p /var/log/dodas
+      ONEDATA='true'
       oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
       HEALTH_CHECK='submitter'
     ;;
@@ -175,6 +174,17 @@ sed -i \
 #if [-n "$SCHEDD_HOST"]; then
 #  echo "NETWORK_INTERFACE = $INTERFACE" >> /etc/condor/condor_config
 #fi
+
+#mount oneclient
+if [ $ONEDATA == 'true' ]; then
+
+    cat >> /etc/supervisor/conf.d/supervisord.conf << EOL
+[program:oneclient]
+command=/usr/bin/oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
+autostart=true
+EOL
+
+fi
 
 # Prepare HTCondor to CCB connection
 if [ -n "$CCB" -a -n "$PRIVATE_NETWORK_NAME" -a -n "$SHARED_SECRET" ]; then
