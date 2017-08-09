@@ -176,15 +176,15 @@ sed -i \
 #fi
 
 #mount oneclient
-if [ $ONEDATA == 'true' ]; then
-
-    cat >> /etc/supervisor/conf.d/supervisord.conf << EOL
-[program:oneclient]
-command=/usr/bin/oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
-autostart=true
-EOL
-
-fi
+#if [ $ONEDATA == 'true' ]; then
+#
+#    cat >> /etc/supervisor/conf.d/supervisord.conf << _EOF_
+#[program:oneclient]
+#command=/usr/bin/oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
+#autostart=true
+#_EOF_
+#
+#fi
 
 # Prepare HTCondor to CCB connection
 if [ -n "$CCB" -a -n "$PRIVATE_NETWORK_NAME" -a -n "$SHARED_SECRET" ]; then
