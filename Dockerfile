@@ -48,21 +48,21 @@ RUN adduser $USER -d $USER_HOME && echo "$USER:user" | chpasswd && \
 RUN chown -R $USER $USER_HOME
 
 COPY dot-bashrc $USER_HOME/.bashrc
-RUN chown $USER $USER_HOME/.bashrc
-RUN mkdir $USER_HOME/.ssh
-RUN chown $USER:$USER $USER_HOME/.ssh
+RUN chown $USER $USER_HOME/.bashrc; \
+mkdir $USER_HOME/.ssh; \
+chown $USER:$USER $USER_HOME/.ssh
 
 # CONDOR
 ADD     https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
 
 WORKDIR /etc/yum.repos.d
-RUN	wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-development-rhel7.repo
-RUN     wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo
-RUN     wget http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
-RUN     rpm --import RPM-GPG-KEY-HTCondor
-RUN     yum-config-manager --enable onedata
-RUN     yum install -y condor-all 
-RUN     yum install -y python-pip && pip install supervisor supervisor-stdout && \
+RUN	wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-development-rhel7.repo; \
+wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo; \
+wget http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor; \
+rpm --import RPM-GPG-KEY-HTCondor; \
+yum-config-manager --enable onedata; \
+yum install -y condor-all ; \
+yum install -y python-pip && pip install supervisor supervisor-stdout && \
         # HEALTHCHECKS
         mkdir -p /opt/health/master/ /opt/health/executor/ /opt/health/submitter/ && \
         pip install Flask
@@ -88,7 +88,7 @@ COPY    run.sh /usr/local/sbin/run.sh
 RUN     mkdir -p /mnt/onedata; \
 mkdir -p /var/log/dodas
 
-RUN     ln -s /usr/lib64/condor /usr/lib/condor
-RUN     ln -s /usr/libexec/condor /usr/lib/condor/libexec
+RUN     ln -s /usr/lib64/condor /usr/lib/condor; \
+ln -s /usr/libexec/condor /usr/lib/condor/libexec
 
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
